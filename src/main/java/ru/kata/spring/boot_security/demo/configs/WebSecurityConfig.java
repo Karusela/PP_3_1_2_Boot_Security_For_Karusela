@@ -44,34 +44,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-//    @Bean
-//    public JdbcUserDetailsManager userDetailsManager(DataSource dataSource) {
-//        JdbcUserDetailsManager users = new.html JdbcUserDetailsManager(dataSource);
-//
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password(passwordEncoder().encode("user"))
-//                .roles("USER")
-//                .build();
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password(passwordEncoder().encode("admin"))
-//                .roles("ADMIN")
-//                .build();
-//
-//        if (users.userExists(user.getUsername())) {
-//            users.updateUser(user);
-//        } else {
-//            users.createUser(user);
-//        }
-//        if (users.userExists(admin.getUsername())) {
-//            users.updateUser(admin);
-//        } else {
-//            users.createUser(admin);
-//        }
-//        return users;
-//    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
