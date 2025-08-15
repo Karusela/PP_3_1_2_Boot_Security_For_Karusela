@@ -2,40 +2,55 @@ package ru.kata.spring.boot_security.demo.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.entities.User;
+import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private UserDao userDao;
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
-    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User getUser(Long id) {
+        return userRepository.getById(id);
     }
 
     @Override
     @Transactional
     public void saveUser(User user) {
-        userDao.saveUser(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public User getUser(int id) {
-        return userDao.getUser(id);
+    public void deleteUser(Long id) {
+        userRepository.delete(userRepository.findById(id).orElseThrow(IllegalArgumentException::new));
     }
 
     @Override
     @Transactional
-    public void deleteUser(int id) {
-        userDao.deleteUser(id);
+    public void update(User user, Long id) {
+        user.setId(id);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 }
