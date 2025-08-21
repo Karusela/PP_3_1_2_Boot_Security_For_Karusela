@@ -23,6 +23,18 @@ public class User implements UserDetails {
     @Column(name = "username", unique = true)
     private String username;
 
+    @Column
+    private String name;
+
+    @Column
+    private String surname;
+
+    @Column
+    private Integer age;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
     @Column(name = "password")
     private String password;
 
@@ -46,7 +58,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -84,6 +96,38 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String firstName) {
+        this.name = firstName;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String lastName) {
+        this.surname = lastName;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Collection<Role> getRoles() {

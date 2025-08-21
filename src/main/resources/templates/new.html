@@ -1,37 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Добавление пользователя</title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <body>
-    <form  th:action="@{/logout}" th:method="POST">
-        <input type="submit" value="Выйти"/>
+<div th:fragment="newUserForm">
+    <form th:action="@{/admin/new}" th:method="post">
+        <div class="mb-3 text-center">
+            <label for="name" class="form-label fw-bold">First name</label>
+            <input type="text" id="name" name="name" class="form-control form-control-custom">
+        </div>
+        <div class="mb-3 text-center">
+            <label for="surname" class="form-label fw-bold">Last name</label>
+            <input type="text" id="surname" name="surname" class="form-control form-control-custom">
+        </div>
+        <div class="mb-3 text-center">
+            <label for="age" class="form-label fw-bold">Age</label>
+            <input type="number" id="age" name="age" class="form-control form-control-custom">
+        </div>
+        <div class="mb-3 text-center">
+            <label for="email" class="form-label fw-bold">Email</label>
+            <input type="email" id="email" name="email" class="form-control form-control-custom">
+        </div>
+        <div class="mb-3 text-center">
+            <label for="password" class="form-label fw-bold">Password</label>
+            <input type="password" id="password" name="password" class="form-control form-control-custom">
+        </div>
+        <div class="mb-3 text-center">
+            <label for="roles" class="form-label fw-bold">Roles</label>
+            <select multiple id="roles" name="roles" class="form-control form-roles-custom">
+                <option value="ROLE_ADMIN">ADMIN</option>
+                <option value="ROLE_USER">USER</option>
+            </select>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Add new user</button>
+        </div>
     </form>
-    <hr>
-    <form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
-        <table th:border="0" th:cellpadding="3">
-            <tr>
-                <td>Имя: </td>
-                <td><input type="text" th:field="*{username}"/></td>
-            </tr>
-            <tr>
-                <td>Пароль: </td>
-                <td><input type="text" th:field="*{password}"/></td>
-            </tr>
-            <tr>
-                <label>Роли:
-                    <input type="checkbox" name="roles"
-                           th:each="role : ${allRoles}"
-                           th:text="${role.name}"
-                           th:value="${role.id}"
-                           th:field="*{roles}"
-                    />
-                </label>
-            </tr>
-        </table>
-        <br/>
-        <input type="submit" value="Добавить">
-    </form>
+</div>
 </body>
 </html>

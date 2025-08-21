@@ -9,6 +9,8 @@ import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -23,14 +25,17 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showUsers(ModelMap model) {
+    public String showUsers(ModelMap model, Principal principal) {
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("roles", roleService.getAll());
+        User currentUser = userService.findByUsername(principal.getName());
+        model.addAttribute("user", currentUser);
         return "index";
     }
 
     @GetMapping(value = "/new")
     public String addNewUser(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("allRoles", roleService.getAll());
+        model.addAttribute("roles", roleService.getAll());
         return "new";
     }
 
@@ -49,7 +54,7 @@ public class AdminController {
     @GetMapping("/edit")
     public String printEditForm(@RequestParam("id") Long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
-        model.addAttribute("allRoles", roleService.getAll());
+        model.addAttribute("roles", roleService.getAll());
         return "edit";
     }
 
