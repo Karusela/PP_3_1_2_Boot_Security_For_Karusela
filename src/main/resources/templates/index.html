@@ -89,9 +89,19 @@
                                             </button>
                                         </td>
                                         <td>
-                                            <form th:method="POST" th:action="@{/admin/delete?id={id}(id=${user.id})}">
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+<!--                                            <form th:method="POST" th:action="@{/admin/delete?id={id}(id=${user.id})}">-->
+<!--                                                <button type="submit" class="btn btn-danger">Delete</button>-->
+<!--                                            </form>-->
+                                            <button type="button" class="btn btn-danger"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteUserModal"
+                                                    th:attr="data-id=${user.id},
+                                                             data-name=${user.name},
+                                                             data-surname=${user.surname},
+                                                             data-age=${user.age},
+                                                             data-email=${user.email}">
+                                                Delete
+                                            </button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -113,6 +123,7 @@
     </div>
 </div>
 <div th:replace="edit :: editUserForm"></div>
+<div th:replace="delete :: deleteUserForm"></div>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script>
     const editUserModal = document.getElementById('editUserModal');
@@ -132,6 +143,32 @@
             document.getElementById('editAge').value = age;
             document.getElementById('editEmail').value = email;
             document.getElementById('editPassword').value = ''; // оставляем пустым для безопасности
+        });
+    }
+</script>
+<script>
+    const deleteUserModal = document.getElementById('deleteUserModal');
+    if (deleteUserModal) {
+        deleteUserModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const surname = button.getAttribute('data-surname');
+            const age = button.getAttribute('data-age');
+            const email = button.getAttribute('data-email');
+
+            document.getElementById('deleteId').value = id;
+            document.getElementById('deleteName').value = name;
+            document.getElementById('deleteSurname').value = surname;
+            document.getElementById('deleteAge').value = age;
+            document.getElementById('deleteEmail').value = email;
+
+            // Снимаем все выбранные роли
+            const select = document.getElementById('deleteRoles');
+            Array.from(select.options).forEach(option => option.selected = false);
+
+            // Автоподсветка ролей не нужна, можно оставить пустой select (пользователь видит доступные роли)
         });
     }
 </script>

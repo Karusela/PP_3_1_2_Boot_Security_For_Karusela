@@ -166,3 +166,10 @@
 }
 .form-label {
     margin-bottom: 0.02rem;
+}
+input[readonly].form-control-custom,
+select[disabled].form-roles-custom {
+    background-color: #e9ecef; /* светло-серый фон */
+    color: #495057; /* текст тёмный */
+    cursor: not-allowed; /* курсор показывает, что редактировать нельзя */
+}
