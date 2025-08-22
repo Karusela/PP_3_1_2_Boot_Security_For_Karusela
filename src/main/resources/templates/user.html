@@ -2,28 +2,76 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Информация о пользователе</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Пользователь</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Ваши данные</h1>
-<hr>
-<form th:action="@{/logout}" th:method="POST">
-    <input type="submit" value="Выйти"/>
-</form>
-<hr>
-<table th:border="3" th:cellpadding="5">
-    <tr>
-        <th>Имя</th>
-        <th>Роли</th>
-    </tr>
-    <tr>
-        <td th:text="${user.username}">Имя</td>
-        <td>
-            <span th:each="role : ${user.roles}">
-                <span th:text="${role.name}"></span>
-            </span>
-        </td>
-    </tr>
-</table>
+<div class="container-fluid bg-dark py-3">
+    <div class="row align-items-center">
+        <div class="col-11">
+            <h3 class="m-0 d-flex flex-wrap align-items-center">
+                <span class="fw-bold text-white" th:text="${user?.email}">email</span>
+                <span class="mx-1">with roles:</span>
+                <span th:each="role : ${roles}"
+                      class="mx-1 fw-bold text-white"
+                      th:text="${#strings.replace(role.name,'ROLE_','')}">ROLE</span>
+            </h3>
+        </div>
+        <div class="col-1 text-end">
+            <form th:action="@{/logout}" th:method="post" class="d-flex">
+                <button type="submit" class="btn btn-outline-secondary no-hover-fill" style="border: none;">Logout
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container-fluid px-0">
+    <div class="row g-0">
+        <div class="col-2 bg-white min-vh-100 pt-3">
+            <button class="sidebar-btn active">User</button>
+        </div>
+        <div class="col-10 p-4 content-area"><h1>User information-page</h1>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+                    <div class="card border rounded">
+                        <div class="card-header all-users-tab">About user</div>
+                        <div class="card-body p-0">
+                            <div class="border-top" style="padding: 1.25rem;">
+                                <table class="table table-striped mb-4 border-top">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">Age</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Role</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td th:text="${user?.id}">ID</td>
+                                        <td th:text="${user?.name}">First Name</td>
+                                        <td th:text="${user?.surname}">Last Name</td>
+                                        <td th:text="${user?.age}">Age</td>
+                                        <td th:text="${user?.email}">Email</td>
+                                        <td><span th:each="role : ${user.roles}"> <span
+                                                th:text="${role?.name}">Role</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

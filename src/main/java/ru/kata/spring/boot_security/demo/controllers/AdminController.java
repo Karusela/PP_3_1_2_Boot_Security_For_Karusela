@@ -33,13 +33,6 @@ public class AdminController {
         return "index";
     }
 
-//    @GetMapping("/new")
-//    public String addNewUser(Model model) {
-//        model.addAttribute("user", new User());
-//        model.addAttribute("roles", roleService.getAll());
-//        return "new";
-//    }
-
     @PostMapping("/new")
     public String createUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
@@ -51,13 +44,6 @@ public class AdminController {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
-
-//    @GetMapping("/edit")
-//    public String printEditForm(@RequestParam("id") Long id, Model model) {
-//        model.addAttribute("user", userService.getUser(id));
-//        model.addAttribute("roles", roleService.getAll());
-//        return "edit";
-//    }
 
     @PostMapping("/edit")
     public String edit(@ModelAttribute("user") User user, @RequestParam("id") Long id) {
