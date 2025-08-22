@@ -11,10 +11,10 @@
 <div class="container-fluid bg-dark py-3">
     <div class="row align-items-center">
         <div class="col-11">
-            <h3 class="m-0">
+            <h3 class="m-0 d-flex flex-wrap align-items-center">
                 <span class="fw-bold text-white" th:text="${user?.email}">email</span>
                 <span class="mx-1">with roles:</span>
-                <span th:each="role : ${currentUser?.roles}"
+                <span th:each="role : ${roles}"
                       class="mx-1 fw-bold text-white"
                       th:text="${#strings.replace(role.name,'ROLE_','')}">ROLE</span>
             </h3>

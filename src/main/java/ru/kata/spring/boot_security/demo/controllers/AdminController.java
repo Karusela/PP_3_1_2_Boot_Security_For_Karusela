@@ -4,17 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
-
-import java.security.Principal;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -33,6 +27,7 @@ public class AdminController {
     public String showUsers(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("role", new Role());
         model.addAttribute("roles", roleService.getAll());
         model.addAttribute("currentUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "index";
