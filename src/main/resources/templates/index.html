@@ -1,53 +1,58 @@
-<!DOCTYPE html> <!-- Определяет документ как HTML5 -->
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"> <!-- Кодировка документа -->
-    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Адаптивность под мобильные устройства -->
-    <title>Пользователи</title> <!-- Заголовок страницы -->
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"> <!-- Подключение Bootstrap CSS -->
-    <link th:href="@{/css/main.css}" rel="stylesheet"> <!-- Подключение собственного CSS --> </head>
-<body> <!-- Верхняя панель (шапка) -->
-<div class="container-fluid bg-dark py-3"> <!-- Контейнер шапки с темным фоном и вертикальным отступом -->
-    <div class="row align-items-center"> <!-- Строка с выравниванием по вертикали -->
-        <div class="col-11"> <!-- Основная часть шапки --> <h3 class="m-0"> <!-- Заголовок без внешнего отступа -->
-            <span class="fw-bold text-white" th:text="${user?.email}">email</span>
-            <!-- Адрес пользователя жирным белым --> <span class="mx-1">with roles:</span>
-            <!-- Дополнительный текст с горизонтальным отступом --> <span th:each="role : ${user?.roles}"
-                                                                          class="mx-1 fw-bold text-white"
-                                                                          th:text="${#strings.replace(role.name,'ROLE_','')}">ROLE</span>
-        </h3></div>
-        <div class="col-1 text-end"> <!-- Колонка справа для кнопки выхода -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Пользователи</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid bg-dark py-3">
+    <div class="row align-items-center">
+        <div class="col-11">
+            <h3 class="m-0">
+                <span class="fw-bold text-white" th:text="${user?.email}">email</span>
+                <span class="mx-1">with roles:</span>
+                <span th:each="role : ${currentUser?.roles}"
+                      class="mx-1 fw-bold text-white"
+                      th:text="${#strings.replace(role.name,'ROLE_','')}">ROLE</span>
+            </h3>
+        </div>
+        <div class="col-1 text-end">
             <form th:action="@{/logout}" th:method="post" class="d-flex">
                 <button type="submit" class="btn btn-outline-secondary no-hover-fill" style="border: none;">Logout
                 </button>
-            </form><!-- Кнопка выхода --> </div>
+            </form>
+        </div>
     </div>
-</div> <!-- Основной контейнер страницы -->
-<div class="container-fluid px-0"> <!-- Контейнер без горизонтальных отступов -->
-    <div class="row g-0"> <!-- Строка без промежутков между колонками --> <!-- Боковая панель -->
-        <div class="col-2 bg-white min-vh-100 pt-3"> <!-- Панель слева с верхним отступом -->
-            <button class="sidebar-btn active">Admin</button> <!-- Кнопка Admin активная -->
-            <button class="sidebar-btn">User</button> <!-- Кнопка User --> </div> <!-- Основная область контента -->
-        <div class="col-10 p-4 content-area"> <!-- Правая колонка с внутренними отступами --> <h1>Admin panel</h1>
-            <!-- Заголовок страницы --> <!-- Вкладки -->
-            <ul class="nav nav-tabs mb-0" id="myTab" role="tablist"> <!-- Контейнер для вкладок -->
+</div>
+<div class="container-fluid px-0">
+    <div class="row g-0">
+        <div class="col-2 bg-white min-vh-100 pt-3">
+            <button class="sidebar-btn active">Admin</button>
+            <button class="sidebar-btn">User</button>
+        </div>
+        <div class="col-10 p-4 content-area"><h1>Admin panel</h1>
+            <ul class="nav nav-tabs mb-0" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users"
                             type="button" role="tab">Users table
-                    </button> <!-- Вкладка "Users table" активная --> </li>
+                    </button>
+                </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="newuser-tab" data-bs-toggle="tab" data-bs-target="#newuser"
                             type="button" role="tab">New User
-                    </button> <!-- Вкладка "New User" --> </li>
-            </ul> <!-- Контент вкладок -->
-            <div class="tab-content" id="myTabContent"> <!-- Контейнер содержимого вкладок --> <!-- Вкладка Users -->
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
-                    <div class="card border rounded"> <!-- Карточка с рамкой -->
-                        <div class="card-header all-users-tab">All users</div> <!-- Заголовок карточки -->
-                        <div class="card-body p-0"> <!-- Тело карточки без отступов -->
-                            <div class="border-top" style="padding: 1.25rem;"><!-- Вложенный блок с верхней границей -->
+                    <div class="card border rounded">
+                        <div class="card-header all-users-tab">All users</div>
+                        <div class="card-body p-0">
+                            <div class="border-top" style="padding: 1.25rem;">
                                 <table class="table table-striped mb-4 border-top">
-                                    <!-- Таблица с полосами и верхней границей -->
                                     <thead>
                                     <tr>
                                         <th scope="col">ID</th>
@@ -61,7 +66,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="user : ${users}"> <!-- Перебор пользователей через Thymeleaf -->
+                                    <tr th:each="user : ${users}">
                                         <td th:text="${user?.id}">ID</td>
                                         <td th:text="${user?.name}">First Name</td>
                                         <td th:text="${user?.surname}">Last Name</td>
@@ -81,8 +86,9 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div> <!-- /.card-body --> </div> <!-- /.card --> </div> <!-- /.tab-pane Users -->
-                <!-- Вкладка New User -->
+                        </div>
+                    </div>
+                </div>
                 <div class="tab-pane fade" id="newuser" role="tabpanel" aria-labelledby="newuser-tab">
                     <div class="card border rounded">
                         <div class="card-header new-user-tab">Add new user</div>

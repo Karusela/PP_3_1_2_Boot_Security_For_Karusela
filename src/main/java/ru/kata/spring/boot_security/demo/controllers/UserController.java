@@ -11,7 +11,7 @@ public class UserController {
 
     @GetMapping(value = "/profile")
     public String usersPage(Model model) {
-        model.addAttribute("user", (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "user";
     }
 }
