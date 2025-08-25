@@ -15,15 +15,15 @@ where not exists (
     and role_id = (select id from roles where name = 'ROLE_ADMIN')
 );
 
---insert into users_roles (user_id, role_id)
---select
---    (select id from users where username = 'admin'),
---    (select id from roles where name = 'ROLE_USER')
---where not exists (
---    select 1 from users_roles
---    where user_id = (select id from users where username = 'admin')
---    and role_id = (select id from roles where name = 'ROLE_USER')
---);
+insert into users_roles (user_id, role_id)
+select
+    (select id from users where username = 'admin'),
+    (select id from roles where name = 'ROLE_USER')
+where not exists (
+    select 1 from users_roles
+    where user_id = (select id from users where username = 'admin')
+    and role_id = (select id from roles where name = 'ROLE_USER')
+);
 
 insert into users_roles (user_id, role_id)
 select

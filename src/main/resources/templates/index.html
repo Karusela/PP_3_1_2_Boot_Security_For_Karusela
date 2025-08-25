@@ -81,8 +81,8 @@
                                         <td th:text="${user?.surname}">Last Name</td>
                                         <td th:text="${user?.age}">Age</td>
                                         <td th:text="${user?.email}">Email</td>
-                                        <td><span th:each="role : ${user.roles}"> <span
-                                                th:text="${role?.name}">Role</span>
+                                        <td><span th:each="role : ${user.roles}">
+                                                 <span th:text="${#strings.replace(role.name,'ROLE_','')}">Role</span>
                                             </span>
                                         </td>
                                         <td>
