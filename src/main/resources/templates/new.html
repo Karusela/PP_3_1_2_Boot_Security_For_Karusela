@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="newUserForm">
-    <form th:action="@{/admin/new}" th:object="${user}" method="post">
+    <form th:action="@{/admin/new}" th:object="${newUser}" method="post">
 
         <div class="mb-3 text-center">
             <label for="name" class="form-label fw-bold">First name</label>

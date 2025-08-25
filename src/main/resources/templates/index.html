@@ -14,7 +14,7 @@
             <h3 class="m-0 d-flex flex-wrap align-items-center">
                 <span class="fw-bold text-white" th:text="${user?.email}">email</span>
                 <span class="mx-1">with roles:</span>
-                <span th:each="role : ${roles}"
+                <span th:each="role : ${user.roles}"
                       class="mx-1 fw-bold text-white"
                       th:text="${#strings.replace(role.name,'ROLE_','')}">ROLE</span>
             </h3>

@@ -14,6 +14,7 @@ public class UserController {
     public String usersPage(Model model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", currentUser);
+        model.addAttribute("roles", currentUser.getRoles());
         model.addAttribute("currentPage", "user");
 
         boolean isAdmin = currentUser.getRoles().stream()
