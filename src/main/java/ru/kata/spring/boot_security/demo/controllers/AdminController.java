@@ -23,14 +23,31 @@ public class AdminController {
         this.roleService = roleService;
     }
 
+    //    @GetMapping
+//    public String showUsers(Model model) {
+//        model.addAttribute("user", new User());
+//        model.addAttribute("users", userService.getAllUsers());
+//        model.addAttribute("role", new Role());
+//        model.addAttribute("roles", roleService.getAll());
+//        model.addAttribute("currentUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        model.addAttribute("currentPage", "admin");
+//        return "index";
+//    }
     @GetMapping
     public String showUsers(Model model) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", new User());
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("role", new Role());
         model.addAttribute("roles", roleService.getAll());
-        model.addAttribute("currentUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return "index";
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentPage", "admin");
+
+        boolean isAdmin = currentUser.getRoles().stream()
+                .anyMatch(r -> r.getName().equals("ROLE_ADMIN"));
+        model.addAttribute("isAdmin", isAdmin);
+
+        return "index"; // admin page template
     }
 
     @PostMapping("/new")

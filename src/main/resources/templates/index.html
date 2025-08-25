@@ -8,7 +8,7 @@
     <link th:href="@{/css/main.css}" rel="stylesheet">
 </head>
 <body>
-<div class="container-fluid bg-dark py-3">
+<div class="container-fluid bg-dark header-small">
     <div class="row align-items-center">
         <div class="col-11">
             <h3 class="m-0 d-flex flex-wrap align-items-center">
@@ -30,8 +30,17 @@
 <div class="container-fluid px-0">
     <div class="row g-0">
         <div class="col-2 bg-white min-vh-100 pt-3">
-            <button class="sidebar-btn active" onclick="location.href='/admin'">Admin</button>
-            <button class="sidebar-btn active" onclick="location.href='/user'">User</button>
+            <button class="sidebar-btn"
+                    th:if="${isAdmin}"
+                    th:classappend="${currentPage == 'admin'} ? ' active'"
+                    onclick="location.href='/admin'">
+                Admin
+            </button>
+            <button class="sidebar-btn"
+                    th:classappend="${currentPage == 'user'} ? ' active'"
+                    onclick="location.href='/profile'">
+                User
+            </button>
         </div>
         <div class="col-10 p-4 content-area"><h1>Admin panel</h1>
             <ul class="nav nav-tabs mb-0" id="myTab" role="tablist">
@@ -66,7 +75,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="user : ${users}">
+                                    <tr th:each="user : ${users}" class="table-data-row">
                                         <td th:text="${user?.id}">ID</td>
                                         <td th:text="${user?.name}">First Name</td>
                                         <td th:text="${user?.surname}">Last Name</td>
@@ -89,9 +98,6 @@
                                             </button>
                                         </td>
                                         <td>
-<!--                                            <form th:method="POST" th:action="@{/admin/delete?id={id}(id=${user.id})}">-->
-<!--                                                <button type="submit" class="btn btn-danger">Delete</button>-->
-<!--                                            </form>-->
                                             <button type="button" class="btn btn-danger"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#deleteUserModal"
@@ -142,7 +148,7 @@
             document.getElementById('editSurname').value = surname;
             document.getElementById('editAge').value = age;
             document.getElementById('editEmail').value = email;
-            document.getElementById('editPassword').value = ''; // оставляем пустым для безопасности
+            document.getElementById('editPassword').value = '';
         });
     }
 </script>
@@ -164,11 +170,9 @@
             document.getElementById('deleteAge').value = age;
             document.getElementById('deleteEmail').value = email;
 
-            // Снимаем все выбранные роли
             const select = document.getElementById('deleteRoles');
             Array.from(select.options).forEach(option => option.selected = false);
 
-            // Автоподсветка ролей не нужна, можно оставить пустой select (пользователь видит доступные роли)
         });
     }
 </script>

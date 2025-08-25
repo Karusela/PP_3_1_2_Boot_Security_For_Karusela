@@ -9,9 +9,17 @@ import ru.kata.spring.boot_security.demo.entities.User;
 @Controller
 public class UserController {
 
-    @GetMapping(value = "/profile")
+
+    @GetMapping("/profile")
     public String usersPage(Model model) {
-        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return "user";
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", currentUser);
+        model.addAttribute("currentPage", "user");
+
+        boolean isAdmin = currentUser.getRoles().stream()
+                .anyMatch(r -> r.getName().equals("ROLE_ADMIN"));
+        model.addAttribute("isAdmin", isAdmin);
+
+        return "user"; // user page template
     }
 }

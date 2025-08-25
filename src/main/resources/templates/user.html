@@ -30,7 +30,17 @@
 <div class="container-fluid px-0">
     <div class="row g-0">
         <div class="col-2 bg-white min-vh-100 pt-3">
-            <button class="sidebar-btn active">User</button>
+            <button class="sidebar-btn"
+                    th:if="${isAdmin}"
+                    th:classappend="${currentPage == 'admin'} ? ' active'"
+                    onclick="location.href='/admin'">
+                Admin
+            </button>
+            <button class="sidebar-btn"
+                    th:classappend="${currentPage == 'user'} ? ' active'"
+                    onclick="location.href='/profile'">
+                User
+            </button>
         </div>
         <div class="col-10 p-4 content-area"><h1>User information-page</h1>
             <div class="tab-content" id="myTabContent">
@@ -51,7 +61,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
+                                    <tr class="user-data-row">
                                         <td th:text="${user?.id}">ID</td>
                                         <td th:text="${user?.name}">First Name</td>
                                         <td th:text="${user?.surname}">Last Name</td>

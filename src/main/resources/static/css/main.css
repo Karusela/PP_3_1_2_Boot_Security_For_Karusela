@@ -1,3 +1,11 @@
+.header-small {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+.admin-panel-title {
+    font-size: 3rem;
+    font-weight: 700;
+}
 .hairline {
     height: 0.5px;
     opacity: 1;
@@ -17,10 +25,10 @@
 }
 .btn-edit-white {
     background-color: rgb(23, 162, 184);
+    border: 1px solid #dee2e6;
     color: #fff;
     border: none;
 }
-
 .btn-edit-white:hover {
     background-color: rgb(9, 122, 151);
     color: #fff;
@@ -33,22 +41,6 @@
     width: 100%;
     overflow-x: auto;
 }
-.sidebar-btn {
-    width: 100%;
-    text-align: left;
-    border: none;
-    color: #0d6efd;
-    background-color: transparent;
-    border-radius: .5rem;
-    padding: .5rem 1rem;
-}
-.sidebar-btn.active {
-    background-color: #0d6efd;
-    color: #fff;
-}
-.sidebar-btn:hover {
-    background-color: rgba(13, 110, 253, 0.1);
-}
 .all-users-tab {
     cursor: pointer;
     background-color: rgb(247, 247, 247);
@@ -58,38 +50,37 @@
     min-height: 100vh;
     background-color: #f8f9fa;
 }
-.sidebar-btn { <!-- Стили для кнопок в боковой панели -->
-    display: block; <!-- Кнопка занимает всю ширину -->
+.sidebar-btn {
+    display: block;
     width: 100%;
-    padding: 10px; <!-- Внутренние отступы -->
-    border: none; <!-- Без рамки -->
-    background: none; <!-- Без фона -->
-    text-align: left; <!-- Текст слева -->
-    font-size: 16px; <!-- Размер шрифта -->
-    cursor: pointer; <!-- Курсор при наведении -->
+    padding: 13px 10px;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
 }
-.sidebar-btn.active { <!-- Активная кнопка в боковой панели -->
-    background-color: #0d6efd; <!-- Синий фон -->
-    color: white; <!-- Белый текст -->
-    border-radius: 5px; <!-- Скругление углов -->
+
+.sidebar-btn.active {
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 5px;
+}
+.sidebar-btn:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+.sidebar-btn.active:hover {
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 5px;
 }
 .nav-link { <!-- Стили вкладок -->
-    cursor: pointer; <!-- Курсор при наведении -->
-    transition: background-color 0.2s; <!-- Плавная смена фона при наведении -->
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
-.all-users-tab { /* Стили для заголовка "All users" */
-    background-color: rgb(247, 247, 247); /* Светлый фон */
-    border-top: 0px solid #dee2e6; /* Верхняя линия */
-    margin: 0; /* Нет внешнего отступа */
-    padding-top: 0.5rem; /* Увеличенный внутренний отступ слева */
-    padding-bottom: 0.6rem; /* Увеличенный внутренний отступ справа */
-    width: 100%; /* Чтобы занимал всю ширину карточки */
-    font-size: 1.15rem; /* Увеличенный размер шрифта */
-    font-weight: 600; /* Жирный текст */
-}
-.new-user-tab {
+.all-users-tab {
     background-color: rgb(247, 247, 247);
-    border-bottom: 1px solid #dee2e6; /* граница для Add new user */
+    border-top: 0px solid #dee2e6;
     margin: 0;
     padding-top: 0.5rem;
     padding-bottom: 0.6rem;
@@ -97,39 +88,54 @@
     font-size: 1.15rem;
     font-weight: 600;
 }
-.btn-edit-white { <!-- Кнопка редактирования белая -->
-    background-color: white;
-    border: 1px solid #dee2e6; <!-- Легкая рамка -->
+.table th,
+.table td {
+    vertical-align: middle;
 }
+.table-data-row td {
+    color: rgb(10, 14, 34);
+    font-weight: 400;
+}
+.new-user-tab {
+    background-color: rgb(247, 247, 247);
+    border-bottom: 1px solid #dee2e6;
+    margin: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.6rem;
+    width: 100%;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
 .nav-link.active {
-    color: #6c757d !important; /* Bootstrap средне-серый */
+    color: #6c757d !important;
 }
 .mx-1 {
-    font-size: 1.75rem;              /* Размер шрифта */
-    font-weight: 400;               /* Толщина текста: normal */
-    color: #fff                /* Можно сразу сделать серым */
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: #fff
 }
 .table thead th {
-    padding-top: 0.6rem;    /* верхний внутренний отступ */
-    padding-bottom: 0.6rem; /* нижний внутренний отступ */
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
 }
 .no-hover-fill:hover {
-    background-color: transparent !important; /* отключаем заливку */
+    background-color: transparent !important;
 }
 
 .form-control-custom {
-    width: 300px;      /* фиксированная ширина */
+    width: 300px;
     height: 29px;
-    display: block;    /* чтобы margin работал */
-    margin: 0 auto;    /* центрируем */
+    display: block;
+    margin: 0 auto;
     border-radius: 5px;
     text-align: center;
 }
 .form-roles-custom {
-    width: 300px;      /* фиксированная ширина */
+    width: 300px;
     height: 47px;
-    display: block;    /* чтобы margin работал */
-    margin: 0 auto;    /* центрируем */
+    display: block;
+    margin: 0 auto;
     border-radius: 5px;
     text-align: start;
     font-size: 14px;
@@ -146,30 +152,54 @@
     border: rgb(30, 149, 67);
     font-size: 19px;
 }
-
-/* при наведении */
 .btn-primary:hover {
     background-color: rgb(33, 136, 56);
     border: rgb(33, 136, 56);
-}
-.card-body {
-    padding-top: 10px; /* было 20px+, делаем компактнее */
 }
 .new-form-container {
     background-color: transparent;
 }
 .card-body {
-    background-color: white; /* для таблицы в All users */
+    padding-top: 10px;
+    background-color: white;
+}
+.all-users-tab + .card-body .table tr:last-child td {
+    border-bottom: none !important;
 }
 .card-body.new-form-container {
-    background-color: transparent; /* для Add new user */
+    background-color: transparent;
 }
 .form-label {
     margin-bottom: 0.02rem;
 }
 input[readonly].form-control-custom,
 select[disabled].form-roles-custom {
-    background-color: #e9ecef; /* светло-серый фон */
-    color: #495057; /* текст тёмный */
-    cursor: not-allowed; /* курсор показывает, что редактировать нельзя */
+    background-color: #e9ecef;
+    color: #495057;
+    cursor: not-allowed;
 }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f5f5f5;
+    }
+    .form-signin {
+      width: 100%;
+      max-width: 330px;
+      padding: 15px;
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .form-signin h1 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+    .form-control {
+      margin-bottom: 1rem;
+    }
+    .btn-primary {
+      width: 100%;
+    }
