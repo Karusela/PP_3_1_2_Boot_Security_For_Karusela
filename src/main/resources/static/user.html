@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Пользователь</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid bg-dark py-3">
+    <div class="row align-items-center">
+        <div class="col-11">
+            <h3 class="m-0 d-flex flex-wrap align-items-center">
+                <span id="currentUserEmail" class="fw-bold text-white">email</span>
+                <span class="mx-1">with roles:</span>
+                <span id="currentUserRoles" class="mx-1 fw-bold text-white">ROLE</span>
+            </h3>
+        </div>
+        <div class="col-1 text-end">
+            <form action="/logout" method="post" class="d-flex">
+                <button type="submit" class="btn btn-outline-secondary no-hover-fill" style="border: none;">Logout</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid px-0">
+    <div class="row g-0">
+        <div class="col-2 bg-white min-vh-100 pt-3">
+            <button class="sidebar-btn" onclick="location.href='/admin'">Admin</button>
+            <button class="sidebar-btn active" onclick="location.href='/profile'">User</button>
+        </div>
+
+        <div class="col-10 p-4 content-area">
+            <h1>User information-page</h1>
+            <div class="card border rounded">
+                <div class="card-header all-users-tab">About user</div>
+                <div class="card-body p-0">
+                    <div class="border-top" style="padding: 1.25rem;">
+                        <table class="table table-striped mb-4 border-top">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Age</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                            </thead>
+                            <tbody id="userInfoBody">
+                            <!-- JS вставит строку с данными -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script>
+    async function loadCurrentUser() {
+        try {
+            // ⚡ здесь предполагается, что у тебя есть эндпоинт /api/user,
+            // который возвращает текущего аутентифицированного пользователя
+            const res = await fetch('/api/user');
+            const user = await res.json();
+
+            // Шапка
+            document.getElementById('currentUserEmail').textContent = user.email;
+            document.getElementById('currentUserRoles').textContent =
+                user.roles.map(r => r.name.replace("ROLE_", "")).join(", ");
+
+            // Таблица
+            const tbody = document.getElementById('userInfoBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.surname}</td>
+                    <td>${user.age}</td>
+                    <td>${user.email}</td>
+                    <td>${user.roles.map(r => r.name.replace("ROLE_", "")).join(", ")}</td>
+                </tr>
+            `;
+        } catch (e) {
+            console.error("Ошибка загрузки пользователя:", e);
+        }
+    }
+
+    loadCurrentUser();
+</script>
+</body>
+</html>

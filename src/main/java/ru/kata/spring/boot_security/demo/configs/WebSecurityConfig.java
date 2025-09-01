@@ -26,6 +26,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf()
+                .ignoringAntMatchers("/api/**")
+                .and()
                 .authorizeRequests()
                 .antMatchers("/profile/").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -40,6 +43,41 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
     }
+//@Override
+//protected void configure(HttpSecurity http) throws Exception {
+//    http
+//            // Временно отключаем CSRF и включаем CORS
+//            .csrf().disable()
+//            .cors().disable()
+//
+//            // Настраиваем правила доступа
+//            .authorizeRequests()
+//            .antMatchers("/api/**").permitAll() // ДОЛЖНО БЫТЬ ПЕРВЫМ!
+//            .antMatchers("/login", "/error").permitAll()
+//            .antMatchers("/profile/**").hasAnyRole("USER", "ADMIN")
+//            .antMatchers("/admin/**").hasRole("ADMIN")
+//            .anyRequest().authenticated()
+//
+//            .and()
+//            // Настраиваем форму логина
+//            .formLogin()
+//            .successHandler(successUserHandler)
+//            .loginPage("/")
+//            .usernameParameter("email")
+//            .passwordParameter("password")
+//            .permitAll()
+//
+//            .and()
+//            // Настраиваем логаут
+//            .logout()
+//            .logoutUrl("/logout")
+//            .logoutSuccessUrl("/")
+//            .permitAll()
+//
+//            .and()
+//            // Включаем Basic Auth
+//            .httpBasic();
+//}
 
     @Bean
     public PasswordEncoder passwordEncoder() {
