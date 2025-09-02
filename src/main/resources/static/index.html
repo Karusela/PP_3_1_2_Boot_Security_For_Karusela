@@ -7,7 +7,6 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
 
-    <!-- CSRF токен для JS -->
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
 </head>
@@ -53,7 +52,6 @@
             </ul>
 
             <div class="tab-content" id="myTabContent">
-                <!-- Таблица пользователей -->
                 <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
                     <div class="card border rounded">
                         <div class="card-header all-users-tab">All users</div>
@@ -73,7 +71,6 @@
                                     </tr>
                                     </thead>
                                     <tbody id="usersTableBody">
-                                    <!-- JS вставит сюда -->
                                     </tbody>
                                 </table>
                             </div>
@@ -81,7 +78,6 @@
                     </div>
                 </div>
 
-                <!-- Новый пользователь -->
                 <div class="tab-pane fade" id="newuser" role="tabpanel" aria-labelledby="newuser-tab">
                     <div class="card border rounded">
                         <div class="card-header new-user-tab">Add new user</div>
@@ -129,7 +125,6 @@
     </div>
 </div>
 
-<!-- MODAL EDIT USER -->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -172,7 +167,6 @@
     </div>
 </div>
 
-<!-- MODAL DELETE USER -->
 <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -295,10 +289,10 @@
     }
 
     async function openEditModal(userId) {
-        if (!userId) return; // игнорируем некорректные ID
+        if (!userId) return;
         try {
             const res = await fetch(`/api/users/${userId}`);
-            if (!res.ok) return; // просто пропускаем ошибку 400/404
+            if (!res.ok) return;
             const user = await res.json();
 
             document.getElementById('editId').value = user.id;
@@ -320,10 +314,10 @@
     }
 
     async function openDeleteModal(userId) {
-        if (!userId) return; // игнорируем некорректные ID
+        if (!userId) return;
         try {
             const res = await fetch(`/api/users/${userId}`);
-            if (!res.ok) return; // пропускаем ошибки
+            if (!res.ok) return;
             const user = await res.json();
             currentDeleteUserId = user.id;
 

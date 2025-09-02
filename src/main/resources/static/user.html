@@ -6,9 +6,12 @@
     <title>Пользователь</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
+    <!-- CSRF токен для JS -->
+    <meta name="_csrf" content="">
+    <meta name="_csrf_header" content="">
 </head>
 <body>
-<div class="container-fluid bg-dark py-3">
+<div class="container-fluid bg-dark header-small">
     <div class="row align-items-center">
         <div class="col-11">
             <h3 class="m-0 d-flex flex-wrap align-items-center">
@@ -19,7 +22,9 @@
         </div>
         <div class="col-1 text-end">
             <form action="/logout" method="post" class="d-flex">
-                <button type="submit" class="btn btn-outline-secondary no-hover-fill" style="border: none;">Logout</button>
+                <input type="hidden" name="_csrf" value="">
+                <button type="submit" class="btn btn-outline-secondary no-hover-fill" style="border: none;">Logout
+                </button>
             </form>
         </div>
     </div>
@@ -28,7 +33,7 @@
 <div class="container-fluid px-0">
     <div class="row g-0">
         <div class="col-2 bg-white min-vh-100 pt-3">
-            <button class="sidebar-btn" onclick="location.href='/admin'">Admin</button>
+            <button id="adminBtn" class="sidebar-btn" onclick="location.href='/admin'">Admin</button>
             <button class="sidebar-btn active" onclick="location.href='/profile'">User</button>
         </div>
 
@@ -64,15 +69,14 @@
 <script>
     async function loadCurrentUser() {
         try {
-            // ⚡ здесь предполагается, что у тебя есть эндпоинт /api/user,
-            // который возвращает текущего аутентифицированного пользователя
-            const res = await fetch('/api/user');
+            const res = await fetch('/api/current-user'); // REST эндпоинт
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
             const user = await res.json();
 
             // Шапка
-            document.getElementById('currentUserEmail').textContent = user.email;
+            document.getElementById('currentUserEmail').textContent = user.email || '';
             document.getElementById('currentUserRoles').textContent =
-                user.roles.map(r => r.name.replace("ROLE_", "")).join(", ");
+                user.roles.map(r => r.name.replace("ROLE_", "")).join(", ") || '';
 
             // Таблица
             const tbody = document.getElementById('userInfoBody');
@@ -86,12 +90,19 @@
                     <td>${user.roles.map(r => r.name.replace("ROLE_", "")).join(", ")}</td>
                 </tr>
             `;
-        } catch (e) {
-            console.error("Ошибка загрузки пользователя:", e);
+
+            // Скрываем кнопку Admin для обычных пользователей
+            const adminBtn = document.getElementById('adminBtn');
+            if (!user.roles.some(r => r.name === 'ROLE_ADMIN')) {
+                adminBtn.style.display = 'none';
+            }
+
+        } catch (error) {
+            console.error("Ошибка загрузки пользователя:", error);
         }
     }
 
-    loadCurrentUser();
+    document.addEventListener('DOMContentLoaded', loadCurrentUser);
 </script>
 </body>
 </html>

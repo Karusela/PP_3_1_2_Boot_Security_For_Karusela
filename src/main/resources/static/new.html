@@ -7,7 +7,6 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
 
-    <!-- CSRF мета-теги -->
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
 </head>
@@ -100,7 +99,7 @@
                 const res = await fetch('/api/roles');
                 const roles = await res.json();
                 const select = document.getElementById('rolesSelect');
-                select.innerHTML = ""; // очистим на всякий случай
+                select.innerHTML = "";
                 roles.forEach(role => {
                     const option = document.createElement("option");
                     option.value = role.id;
@@ -115,7 +114,6 @@
         const form = document.getElementById('newUserForm');
         form.addEventListener('submit', async e => {
             e.preventDefault();
-            console.log("Сработал submit формы");
 
             const user = {
                 name: form.name.value,
@@ -125,8 +123,6 @@
                 password: form.password.value,
                 roles: Array.from(form.roles.selectedOptions).map(o => ({id: parseInt(o.value)}))
             };
-
-            console.log("Подготавливаю данные пользователя:", user);
 
             try {
                     const res = await fetch('/api/users', {
@@ -138,10 +134,7 @@
                         body: JSON.stringify(user)
                     });
 
-                    console.log("Response status:", res.status);
-
                     if (res.ok) {
-                        // редирект на страницу админа
                         window.location.assign("/admin");
                     } else {
                         const errText = await res.text();
